@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toshkent Aksessuar — onlayn do‘kon</title>
+  <meta name="description" content="Sumka, soat, hamyon va boshqa aksessuarlar. Toshkent bo‘ylab yetkazib berish.">
+  <style>
+    :root {
+      --ink: #161a2b;
+      --cobalt: #2740d6;
+      --sky: #eef1ff;
+      --marigold: #ffb81c;
+      --line: #d9deef;
+      --muted: #5d6585;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --display: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--sans); font-size: 1rem; line-height: 1.5; color: var(--ink); background: #fff; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--marigold); outline-offset: 2px; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+    h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.1; }
+
+    /* Tepa panel: logotip va savat tugmasi */
+    .top { position: sticky; top: 0; z-index: 5; background: var(--cobalt); color: #fff; }
+    .top .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; padding-bottom: 12px; }
+    .brand { font-family: var(--display); font-weight: 700; font-size: 1.2rem; }
+    .cart-btn { background: var(--marigold); color: var(--ink); border: 0; border-radius: 999px; padding: 9px 18px; font: inherit; font-weight: 700; cursor: pointer; }
+
+    /* Hero */
+    .hero { background: var(--sky); padding: 56px 0 48px; }
+    .hero h1 { font-size: clamp(2.2rem, 8vw, 4rem); max-width: 14ch; color: var(--cobalt); }
+    .hero p { max-width: 44ch; margin: 16px 0 0; color: var(--muted); font-size: 1.1rem; }
+    .perks { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 24px 0 0; padding: 0; list-style: none; font-weight: 600; }
+
+    /* Filtr tugmalari */
+    .shop { padding: 40px 0 56px; }
+    .shop h2 { font-size: 1.8rem; margin-bottom: 16px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .chip { border: 2px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 7px 16px; font: inherit; cursor: pointer; }
+    .chip[aria-pressed="true"] { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
+
+    /* Mahsulotlar to'ri */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
+    .item { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    .pic { height: 160px; display: grid; place-items: center; font-size: 3.6rem; }
+    .info { padding: 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .info h3 { font-size: 1.05rem; }
+    .info .sub { color: var(--muted); font-size: .9rem; }
+    .price { font-weight: 700; font-size: 1.1rem; margin-top: auto; padding-top: 8px; }
+    .old { color: var(--muted); font-weight: 400; font-size: .9rem; text-decoration: line-through; margin-left: 6px; }
+    .add { margin-top: 10px; background: var(--ink); color: #fff; border: 0; border-radius: 10px; padding: 10px; font: inherit; font-weight: 600; cursor: pointer; }
+    .add:hover { background: var(--cobalt); }
+
+    /* Savat paneli (o'ngdan chiqadi) */
+    .overlay { position: fixed; inset: 0; background: rgba(22,26,43,.5); display: none; z-index: 9; }
+    .overlay.open { display: block; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(400px, 100%); background: #fff; z-index: 10; display: none; flex-direction: column; }
+    .drawer.open { display: flex; }
+    .drawer header { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--line); }
+    .drawer h2 { font-size: 1.3rem; }
+    .close { background: none; border: 0; font-size: 1.6rem; cursor: pointer; line-height: 1; }
+    .lines { flex: 1; overflow-y: auto; padding: 8px 16px; }
+    .line { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .qty { display: flex; align-items: center; gap: 8px; grid-column: 1 / -1; }
+    .qty button { width: 30px; height: 30px; border: 1px solid var(--line); background: #fff; border-radius: 8px; font-size: 1.1rem; cursor: pointer; }
+    .empty { color: var(--muted); padding: 24px 0; }
+    .drawer footer { padding: 16px; border-top: 1px solid var(--line); }
+    .total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.15rem; margin-bottom: 12px; }
+    .order { display: block; text-align: center; background: var(--cobalt); color: #fff; padding: 13px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+    .order[aria-disabled="true"] { background: var(--line); color: var(--muted); pointer-events: none; }
+
+    .foot { background: var(--ink); color: #fff; padding: 32px 0; text-align: center; font-size: .95rem; }
+    .foot a { color: var(--marigold); }
+  </style>
+</head>
+<body>
+
+  <header class="top">
+    <div class="wrap">
+      <span class="brand">Toshkent Aksessuar</span>
+      <button class="cart-btn" id="openCart" type="button">Savat (<span id="count">0</span>)</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <h1>Har kuningiz uchun aksessuar</h1>
+        <p>Sumka, soat, hamyon va ko‘zoynaklar. Buyurtmani Telegramda tasdiqlaymiz.</p>
+        <ul class="perks">
+          <li>Toshkent bo‘ylab 1 kunda yetkazish</li>
+          <li>Qabul qilganda to‘lash</li>
+          <li>7 kun ichida almashtirish</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="shop" id="katalog">
+      <div class="wrap">
+        <h2>Katalog</h2>
+        <div class="filters" id="filters" role="group" aria-label="Toifalar"></div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      Savollar bo‘lsa: <a href="https://t.me/mening_dokonim">@mening_dokonim</a> · +998 90 123 45 67<br>
+      © 2026 Toshkent Aksessuar. Namuna sayt.
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer" aria-label="Savat">
+    <header>
+      <h2>Savatingiz</h2>
+      <button class="close" id="closeCart" type="button" aria-label="Yopish">×</button>
+    </header>
+    <div class="lines" id="lines"></div>
+    <footer>
+      <div class="total"><span>Jami</span><span id="total">0 so‘m</span></div>
+      <a class="order" id="order" href="#" target="_blank" rel="noopener" aria-disabled="true">Telegramda buyurtma berish</a>
+    </footer>
+  </aside>
+
+  <script>
+    // 1. Mahsulotlar ro'yxati — yangi mahsulot qo'shish uchun shu yerga qator qo'shing
+    const products = [
+      { id: 1, name: "Charm sumka",       cat: "Sumka",    price: 289000, old: 349000, emoji: "👜", bg: "#ffe1b8", sub: "Qo‘lda tikilgan" },
+      { id: 2, name: "Bel sumkasi",       cat: "Sumka",    price: 129000,              emoji: "🎒", bg: "#d4f0e4", sub: "Suv o‘tkazmaydi" },
+      { id: 3, name: "Klassik soat",      cat: "Soat",     price: 459000, old: 520000, emoji: "⌚", bg: "#dfe4ff", sub: "Po‘lat tasma" },
+      { id: 4, name: "Sport soati",       cat: "Soat",     price: 319000,              emoji: "⏱️", bg: "#ffd9d9", sub: "Suvga chidamli" },
+      { id: 5, name: "Erkaklar hamyoni",  cat: "Hamyon",   price: 99000,               emoji: "👛", bg: "#e8e0d4", sub: "Haqiqiy charm" },
+      { id: 6, name: "Ayollar hamyoni",   cat: "Hamyon",   price: 119000,              emoji: "💼", bg: "#f3d9f0", sub: "6 ta karta uchun" },
+      { id: 7, name: "Quyosh ko‘zoynagi", cat: "Ko‘zoynak", price: 149000, old: 189000, emoji: "🕶️", bg: "#d8ecf7", sub: "UV himoyasi" },
+      { id: 8, name: "Yozgi kepka",       cat: "Kepka",    price: 79000,               emoji: "🧢", bg: "#fff0b3", sub: "O‘lchami sozlanadi" }
+    ];
+
+    const cart = {};   // { mahsulotId: soni } — savat shu obyektda saqlanadi
+    const $ = (id) => document.getElementById(id);
+    const money = (n) => n.toLocaleString("ru-RU") + " so‘m";
+    let activeCat = "Hammasi";
+
+    // 2. Toifa tugmalari
+    function renderFilters() {
+      const cats = ["Hammasi", ...new Set(products.map(p => p.cat))];
+      $("filters").innerHTML = cats.map(c =>
+        `<button class="chip" type="button" aria-pressed="${c === activeCat}" data-cat="${c}">${c}</button>`
+      ).join("");
+    }
+
+    // 3. Mahsulotlarni chizish
+    function renderGrid() {
+      const list = products.filter(p => activeCat === "Hammasi" || p.cat === activeCat);
+      $("grid").innerHTML = list.map(p => `
+        <article class="item">
+          <div class="pic" style="background:${p.bg}" aria-hidden="true">${p.emoji}</div>
+          <div class="info">
+            <h3>${p.name}</h3>
+            <span class="sub">${p.sub}</span>
+            <div class="price">${money(p.price)}${p.old ? `<span class="old">${money(p.old)}</span>` : ""}</div>
+            <button class="add" type="button" data-id="${p.id}">Savatga qo‘shish</button>
+          </div>
+        </article>`).join("");
+    }
+
+    // 4. Savatni chizish va Telegram havolasini yasash
+    function renderCart() {
+      const ids = Object.keys(cart);
+      let total = 0, count = 0, text = "Salom! Buyurtma bermoqchiman:\n";
+      $("lines").innerHTML = ids.length ? ids.map(id => {
+        const p = products.find(x => x.id == id), q = cart[id], sum = p.price * q;
+        total += sum; count += q; text += `• ${p.name} × ${q} = ${money(sum)}\n`;
+        return `<div class="line">
+          <strong>${p.name}</strong><span>${money(sum)}</span>
+          <div class="qty">
+            <button type="button" data-dec="${id}" aria-label="Kamaytirish">−</button>
+            <span>${q}</span>
+            <button type="button" data-inc="${id}" aria-label="Ko‘paytirish">+</button>
+          </div></div>`;
+      }).join("") : `<p class="empty">Savat hozircha bo‘sh. Katalogdan mahsulot tanlang.</p>`;
+
+      text += `Jami: ${money(total)}`;
+      $("count").textContent = count;
+      $("total").textContent = money(total);
+      const order = $("order");
+      order.setAttribute("aria-disabled", ids.length ? "false" : "true");
+      order.href = ids.length ? "https://t.me/mening_dokonim?text=" + encodeURIComponent(text) : "#";
+    }
+
+    // 5. Bosishlarni tinglash
+    $("filters").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-cat]"); if (!b) return;
+      activeCat = b.dataset.cat; renderFilters(); renderGrid();
+    });
+    $("grid").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-id]"); if (!b) return;
+      cart[b.dataset.id] = (cart[b.dataset.id] || 0) + 1; renderCart();
+      b.textContent = "Qo‘shildi ✓"; setTimeout(() => b.textContent = "Savatga qo‘shish", 900);
+    });
+    $("lines").addEventListener("click", (e) => {
+      const inc = e.target.dataset.inc, dec = e.target.dataset.dec;
+      if (inc) cart[inc]++;
+      if (dec) { cart[dec]--; if (cart[dec] <= 0) delete cart[dec]; }
+      renderCart();
+    });
+
+    const toggle = (open) => { $("drawer").classList.toggle("open", open); $("overlay").classList.toggle("open", open); };
+    $("openCart").onclick = () => toggle(true);
+    $("closeCart").onclick = $("overlay").onclick = () => toggle(false);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") toggle(false); });
+
+    renderFilters(); renderGrid(); renderCart();
+  </script>
+</body>
+</html>

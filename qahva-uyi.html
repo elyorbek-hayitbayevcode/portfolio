@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qahva Uyi — Toshkentdagi shinam qahvaxona</title>
+  <meta name="description" content="Qahva Uyi: yangi qovurilgan qahva, uyda pishirilgan shirinliklar va issiq muhit. Chilonzor, Toshkent.">
+  <style>
+    /* 1. Ranglar va shriftlar bir joyda — keyin oson o'zgartirasiz */
+    :root {
+      --ink: #12263f;        /* asosiy matn va to'q fon */
+      --tile: #1c5d6b;       /* Samarqand koshinidan olingan zangori */
+      --mist: #eaf3f2;       /* och fon */
+      --saffron: #f2b134;    /* tugmalar uchun */
+      --line: #c5d9d8;
+      --serif: "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--mist);
+    }
+    a { color: inherit; }
+    a:focus-visible, .btn:focus-visible { outline: 3px solid var(--saffron); outline-offset: 3px; }
+
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 64px 0; }
+    h1, h2, h3 { font-family: var(--serif); line-height: 1.15; margin: 0; }
+    h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin-bottom: 8px; }
+    .lead { max-width: 52ch; margin: 0 0 32px; color: #3c556b; }
+
+    /* 2. Tepadagi menyu */
+    .nav { background: var(--ink); color: #fff; }
+    .nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+    .logo { font-family: var(--serif); font-size: 1.3rem; text-decoration: none; }
+    .nav ul { display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
+    .nav a { text-decoration: none; opacity: .85; }
+    .nav a:hover { opacity: 1; text-decoration: underline; }
+
+    /* 3. Hero: koshin naqshi faqat CSS bilan chizilgan */
+    .hero {
+      background:
+        linear-gradient(135deg, transparent 75%, rgba(255,255,255,.07) 75%) 0 0 / 56px 56px,
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,.07) 75%) 0 0 / 56px 56px,
+        var(--tile);
+      color: #fff;
+      padding: 96px 0 88px;
+    }
+    .hero h1 { font-size: clamp(2.6rem, 11vw, 5.2rem); max-width: 12ch; }
+    .hero p { font-size: 1.2rem; max-width: 40ch; margin: 20px 0 32px; color: #dcecec; }
+    .btn {
+      display: inline-block; background: var(--saffron); color: var(--ink);
+      padding: 14px 28px; border-radius: 10px; font-weight: 700; text-decoration: none;
+    }
+    .btn:hover { background: #ffc352; }
+    .btn.ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.55); margin-left: 8px; }
+    .btn.ghost:hover { background: rgba(255,255,255,.12); }
+
+    /* 4. Menyu: haqiqiy kafe menyusiga o'xshash (nomi ..... narxi) */
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; }
+    .menu-grid h3 { font-size: 1.4rem; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--tile); }
+    .items { list-style: none; margin: 0; padding: 0; }
+    .items li { display: flex; align-items: baseline; gap: 8px; padding: 8px 0; }
+    .items .name { font-weight: 600; }
+    .items .dots { flex: 1; border-bottom: 2px dotted var(--line); transform: translateY(-4px); }
+    .items .price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .items small { display: block; font-weight: 400; color: #5a7285; font-size: .88rem; }
+    .note { margin-top: 28px; font-size: .92rem; color: #5a7285; }
+
+    /* 5. Biz haqimizda */
+    .about { background: #fff; }
+    .about .wrap { display: grid; gap: 32px; grid-template-columns: 1fr; }
+    @media (min-width: 760px) { .about .wrap { grid-template-columns: 1.2fr 1fr; align-items: start; } }
+    .facts { list-style: none; margin: 0; padding: 0; border-left: 4px solid var(--saffron); padding-left: 20px; }
+    .facts li { margin-bottom: 14px; }
+    .facts strong { display: block; font-family: var(--serif); font-size: 1.5rem; }
+
+    /* 6. Manzil va ish vaqti */
+    .visit-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    table { border-collapse: collapse; width: 100%; max-width: 360px; }
+    td { padding: 8px 0; border-bottom: 1px solid var(--line); }
+    td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+    .visit-grid p { margin: 0 0 14px; }
+
+    /* 7. Pastki qism */
+    footer { background: var(--ink); color: #fff; text-align: center; padding: 40px 20px; }
+    footer .btn { margin: 6px; }
+    footer small { display: block; margin-top: 20px; opacity: .65; }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="#">Qahva Uyi</a>
+      <nav aria-label="Asosiy menyu">
+        <ul>
+          <li><a href="#menyu">Menyu</a></li>
+          <li><a href="#biz">Biz haqimizda</a></li>
+          <li><a href="#manzil">Manzil</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <h1>Qahva Uyi</h1>
+        <p>Har ertalab yangi qovurilgan qahva va oshxonamizda pishirilgan shirinliklar. Chilonzorda, do‘stlar bilan o‘tirishga qulay joy.</p>
+        <a class="btn" href="tel:+998901234567">Stol band qilish</a>
+        <a class="btn ghost" href="#menyu">Menyuni ko‘rish</a>
+      </div>
+    </section>
+
+    <section id="menyu">
+      <div class="wrap">
+        <h2>Menyu</h2>
+        <p class="lead">Narxlar so‘mda. Yangi taomlar har hafta qo‘shiladi.</p>
+
+        <div class="menu-grid">
+          <div>
+            <h3>Qahva</h3>
+            <ul class="items">
+              <li><span class="name">Espresso</span><span class="dots"></span><span class="price">14 000</span></li>
+              <li><span class="name">Amerikano</span><span class="dots"></span><span class="price">16 000</span></li>
+              <li><span class="name">Kapuchino</span><span class="dots"></span><span class="price">22 000</span></li>
+              <li><span class="name">Latte<small>sutli, yumshoq</small></span><span class="dots"></span><span class="price">24 000</span></li>
+              <li><span class="name">Muzli qahva</span><span class="dots"></span><span class="price">26 000</span></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Choy</h3>
+            <ul class="items">
+              <li><span class="name">Qora choy</span><span class="dots"></span><span class="price">10 000</span></li>
+              <li><span class="name">Ko‘k choy</span><span class="dots"></span><span class="price">10 000</span></li>
+              <li><span class="name">Limonli choy</span><span class="dots"></span><span class="price">14 000</span></li>
+              <li><span class="name">Yalpizli choy<small>choynakda, 2 kishilik</small></span><span class="dots"></span><span class="price">28 000</span></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Shirinlik</h3>
+            <ul class="items">
+              <li><span class="name">Napoleon</span><span class="dots"></span><span class="price">25 000</span></li>
+              <li><span class="name">Sirnik</span><span class="dots"></span><span class="price">28 000</span></li>
+              <li><span class="name">Shokoladli brauni</span><span class="dots"></span><span class="price">22 000</span></li>
+              <li><span class="name">Yong‘oqli pechenye</span><span class="dots"></span><span class="price">12 000</span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="note">Allergiyangiz bo‘lsa, buyurtma berishdan oldin xodimga ayting.</p>
+      </div>
+    </section>
+
+    <section id="biz" class="about">
+      <div class="wrap">
+        <div>
+          <h2>Biz haqimizda</h2>
+          <p>Qahva Uyi 2021-yilda kichik oilaviy kafe sifatida ochilgan. Donni o‘zimiz qovuramiz, shirinliklarni har kuni ertalab oshxonada pishiramiz.</p>
+          <p>Bizda shoshilish yo‘q: kitob o‘qing, ish qiling yoki shunchaki suhbatlashing. Wi-Fi bepul.</p>
+        </div>
+        <ul class="facts">
+          <li><strong>2021</strong>ochilgan yil</li>
+          <li><strong>Har kuni</strong>yangi qovurilgan don</li>
+          <li><strong>Bepul Wi-Fi</strong>va rozetkali stollar</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="manzil">
+      <div class="wrap">
+        <h2>Bizni toping</h2>
+        <p class="lead">Chilonzor metrosidan 5 daqiqalik piyoda yo‘l.</p>
+        <div class="visit-grid">
+          <div>
+            <p><strong>Manzil</strong><br>Toshkent, Chilonzor tumani, Bunyodkor ko‘chasi, 12-uy</p>
+            <p><strong>Telefon</strong><br><a href="tel:+998901234567">+998 90 123 45 67</a></p>
+            <a class="btn" href="https://maps.google.com/?q=Chilonzor+Toshkent" target="_blank" rel="noopener">Xaritada ochish</a>
+          </div>
+          <table aria-label="Ish vaqti">
+            <tr><td>Dushanba – Juma</td><td>08:00 – 22:00</td></tr>
+            <tr><td>Shanba</td><td>09:00 – 23:00</td></tr>
+            <tr><td>Yakshanba</td><td>09:00 – 21:00</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <h2>Stol band qilmoqchimisiz?</h2>
+    <p>Telegramda yozing yoki qo‘ng‘iroq qiling.</p>
+    <a class="btn" href="https://t.me/qahvauyi">Telegram</a>
+    <a class="btn ghost" href="https://instagram.com/qahvauyi">Instagram</a>
+    <small>© 2026 Qahva Uyi. Namuna sayt.</small>
+  </footer>
+
+</body>
+</html>
