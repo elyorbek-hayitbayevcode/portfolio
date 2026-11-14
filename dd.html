@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kichik biznes uchun veb-saytlar — portfolio</title>
+  <meta name="description" content="Kafe, do‘kon va xizmat ko‘rsatish biznesi uchun oddiy, telefonga moslangan saytlar.">
+  <style>
+    :root {
+      --ink: #1d1633;
+      --violet: #5b3fd9;
+      --lilac: #f1eefb;
+      --gold: #ffc247;
+      --muted: #5f5a78;
+      --line: #dcd6f2;
+      --serif: "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--sans); font-size: 1.05rem; line-height: 1.6; color: var(--ink); background: var(--lilac); }
+    a:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    h1, h2, h3 { font-family: var(--serif); line-height: 1.15; margin: 0; }
+    section { padding: 56px 0; }
+    h2 { font-size: clamp(1.7rem, 5vw, 2.3rem); margin-bottom: 24px; }
+
+    /* Hero */
+    .hero { background: var(--ink); color: #fff; padding: 88px 0 72px; }
+    .hero h1 { font-size: clamp(2.3rem, 9vw, 4.2rem); max-width: 16ch; }
+    .hero p { max-width: 46ch; margin: 18px 0 30px; color: #cfc9ea; font-size: 1.15rem; }
+    .btn { display: inline-block; background: var(--gold); color: var(--ink); padding: 14px 26px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+    .btn:hover { background: #ffd273; }
+
+    /* Loyihalar */
+    .projects { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .project { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+    .shot { height: 150px; display: grid; place-items: center; font-family: var(--serif); font-size: 1.8rem; color: #fff; }
+    .shot.cafe { background: linear-gradient(135deg, #1c5d6b, #12263f); }
+    .shot.shop { background: linear-gradient(135deg, #2740d6, #161a2b); }
+    .project .body { padding: 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .project h3 { font-size: 1.35rem; }
+    .project p { margin: 0; color: var(--muted); font-size: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 10px; padding: 0; list-style: none; }
+    .tags li { background: var(--lilac); border-radius: 999px; padding: 2px 12px; font-size: .85rem; }
+    .project a.open { margin-top: auto; align-self: flex-start; background: var(--violet); color: #fff; padding: 11px 22px; border-radius: 10px; font-weight: 600; text-decoration: none; }
+    .project a.open:hover { background: #4a30bd; }
+
+    /* Xizmatlar */
+    .services { background: #fff; }
+    .list { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); list-style: none; margin: 0; padding: 0; }
+    .list li { border-left: 4px solid var(--gold); padding-left: 16px; }
+    .list strong { display: block; font-family: var(--serif); font-size: 1.2rem; }
+    .list span { color: var(--muted); }
+
+    /* Aloqa */
+    .contact { text-align: center; }
+    .contact p { max-width: 44ch; margin: 0 auto 24px; color: var(--muted); }
+    footer { background: var(--ink); color: #b7b0d8; text-align: center; padding: 24px 20px; font-size: .9rem; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1>Kichik biznes uchun oddiy va chiroyli saytlar</h1>
+      <p>Kafe, do‘kon yoki xizmatingiz uchun telefonda yaxshi ishlaydigan sayt yasayman. Quyida ikkita namunani ko‘ring.</p>
+      <a class="btn" href="#aloqa">Buyurtma berish</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="ishlar">
+      <div class="wrap">
+        <h2>Namuna ishlar</h2>
+        <div class="projects">
+          <article class="project">
+            <div class="shot cafe" aria-hidden="true">Qahva Uyi</div>
+            <div class="body">
+              <h3>Kafe uchun sayt</h3>
+              <p>Menyu, manzil, ish vaqti va stol band qilish tugmasi bitta sahifada.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>Mobilga moslangan</li></ul>
+              <a class="open" href="qahva-uyi.html">Saytni ko‘rish</a>
+            </div>
+          </article>
+
+          <article class="project">
+            <div class="shot shop" aria-hidden="true">Toshkent Aksessuar</div>
+            <div class="body">
+              <h3>Onlayn do‘kon</h3>
+              <p>Toifalar bo‘yicha filtr, savat va Telegram orqali buyurtma berish.</p>
+              <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+              <a class="open" href="onlayn-dokon.html">Saytni ko‘rish</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services">
+      <div class="wrap">
+        <h2>Nimalar qilaman</h2>
+        <ul class="list">
+          <li><strong>Bir sahifali sayt</strong><span>Vizitka, narxlar, aloqa</span></li>
+          <li><strong>Telefonga moslash</strong><span>Mavjud saytni mobilga to‘g‘rilash</span></li>
+          <li><strong>Kichik tuzatishlar</strong><span>Dizayn, matn, rasm almashtirish</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contact" id="aloqa">
+      <div class="wrap">
+        <h2>Yozing, gaplashamiz</h2>
+        <p>Qanday sayt kerakligini qisqacha yozing, narx va muddatni shu kunning o‘zida aytaman.</p>
+        <a class="btn" href="https://t.me/sizning_telegram">Telegramda yozish</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Veb-sayt xizmati</footer>
+
+</body>
+</html>
